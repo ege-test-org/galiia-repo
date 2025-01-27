@@ -34,3 +34,5 @@ jobs:
 
       - name: Unzip artifact
         run: unzip artifact.zip -d artifacts
+      - name: Display downloaded files
+        run: ls -R
