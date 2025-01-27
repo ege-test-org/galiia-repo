@@ -13,7 +13,6 @@ jobs:
   check-build-status:
     runs-on: ubuntu-latest
     outputs:
-      can_deploy: ${{ steps.check_build.outputs.can_deploy }}
       workflow_run_id: ${{ steps.get_workflow_run.outputs.data.workflow_runs[0].id }}
     steps:
       - name: Get latest build workflow run
@@ -49,6 +48,8 @@ jobs:
   deploy:
     needs: check-build-status
     runs-on: ubuntu-latest
+    env: 
+      WORKFLOW_RUN_ID: ${{ needs.check-build-status.outputs.workflow_run_id }}
     steps:
       - name: Download artifact from another workflow
         uses: actions/github-script@v7
@@ -57,7 +58,7 @@ jobs:
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              run_id: ${{ needs.check-build-status.outputs.workflow_run_id }}
+              run_id: ${{ env.WORKFLOW_RUN_ID }} 
             });
             const matchArtifact = artifacts.data.artifacts.find((artifact) => {
               return artifact.name === "Artemis.war"
@@ -70,7 +71,7 @@ jobs:
             });
             const fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/artifact.zip', Buffer.from(download.data));
-
+            
       - name: Unzip artifact
         run: unzip artifact.zip -d artifacts
 
