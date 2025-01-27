@@ -50,7 +50,7 @@ jobs:
     needs: check-build-status
     runs-on: ubuntu-latest
     env:
-      WORKFLOW_RUN_ID: ${{needs.check-build-status.outputs.workflow_run_id}}
+      WORKFLOW_RUN_ID: ${{ needs.check-build-status.outputs.workflow_run_id }}
       HEALTH_CHECK_URL: "https://artemis-staging-localci.artemis.cit.tum.de/management/health"
 
     timeout-minutes: 30
@@ -60,6 +60,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            console.log(${{ env.WORKFLOW_RUN_ID }} )
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
