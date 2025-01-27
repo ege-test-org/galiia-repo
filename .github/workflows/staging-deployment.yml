@@ -49,8 +49,6 @@ jobs:
   deploy:
     needs: check-build-status
     runs-on: ubuntu-latest
-    env:
-      WORKFLOW_RUN_ID: ${{ needs.check-build-status.outputs.workflow_run_id }}
     steps:
       - name: Download artifact from another workflow
         uses: actions/github-script@v7
@@ -59,28 +57,19 @@ jobs:
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              run_id: ${{ env.WORKFLOW_RUN_ID }} 
+              run_id: ${{ needs.check-build-status.outputs.workflow_run_id }}
             });
-            
-            const matchArtifact = artifacts.data.artifacts.find(
-              (artifact) => artifact.name === "Artemis.war"
-            );
-            
-            if (!matchArtifact) {
-              throw new Error('Artifact not found');
-            }
-            
+            const matchArtifact = artifacts.data.artifacts.find((artifact) => {
+              return artifact.name === "Artemis.war"
+            });
             const download = await github.rest.actions.downloadArtifact({
               owner: context.repo.owner,
               repo: context.repo.repo,
               artifact_id: matchArtifact.id,
               archive_format: 'zip'
             });
-            
             const fs = require('fs');
-            fs.writeFileSync(
-              ''${{github.workspace}}/artifact.zip', Buffer.from(download.data)
-            );
+            fs.writeFileSync('${{github.workspace}}/artifact.zip', Buffer.from(download.data));
 
       - name: Unzip artifact
         run: unzip artifact.zip -d artifacts
