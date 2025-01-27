@@ -28,4 +28,4 @@ jobs:
     - name: List files
       run: |
         echo "Directory structure:"
-        ls -la downloaded-files/
+        ls -la 
