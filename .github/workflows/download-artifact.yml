@@ -1,12 +1,10 @@
 name: Download Artifact
 
 on:
-  workflow_dispatch:
-    inputs:
-      run_id:
-        description: 'Run ID to download artifacts from'
-        required: true
-        type: string
+  workflow_run:
+    workflows: ["Create and Upload Artifact"]
+    types:
+      - completed
 
 jobs:
   download:
@@ -15,9 +13,11 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        run-id: ${{ inputs.run_id }}
+        name: my-files
+        path: downloaded-files
+        run_id: ${{ github.event.workflow_run.id }}
 
-    - name: Display content
+    - name: List files
       run: |
         echo "Directory structure:"
-        ls -la 
+        ls -la downloaded-files/
