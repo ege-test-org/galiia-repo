@@ -1,33 +1,22 @@
-name: Build and Upload Artifact
+name: Create and Upload Artifact
 
 on:
-  workflow_dispatch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build:
+  create-and-upload:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+    - name: Create dummy file
+      run: |
+        echo "Hello from GitHub Actions" > dummy.txt
         
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-      
-    - name: Build with Gradle
-      run: ./gradlew build
-      
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: my-application
-        path: build/libs/*.jar
-        retention-days: 5
-        
-    - name: List build directory contents
-      run: ls -R build/libs/
+        name: my-files
+        path: dummy.txt
+        retention-days: 1
