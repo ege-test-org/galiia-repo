@@ -18,4 +18,6 @@ jobs:
         run-id: ${{ inputs.run_id }}
 
     - name: Display content
-      run: cat my-files/dummy.txt
+      run: |
+        echo "Directory structure:"
+        ls -la downloaded-files/
