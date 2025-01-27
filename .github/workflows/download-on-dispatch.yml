@@ -1,0 +1,19 @@
+name: Download Artifact
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        type: string
+    
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: my-files
+          run-id: ${{ github.event.inputs.run_id }}
+      - name: Display structure of downloaded files
+        run: ls -R
