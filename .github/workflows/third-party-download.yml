@@ -10,8 +10,8 @@ jobs:
       - name: Download artifact from build
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: upload-artifact.yml
+          workflow: upload-artemis.yml
           workflow_conclusion: success
-          name: my-files
+          name: Artemis.war
           path: artifacts
           branch: ${{ github.event.inputs.branch }}
