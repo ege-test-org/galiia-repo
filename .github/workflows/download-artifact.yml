@@ -1,0 +1,30 @@
+name: Download and Process Artifact
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: my-application
+        path: downloaded-artifacts
+
+    - name: Display structure of downloaded files
+      run: ls -R downloaded-artifacts
+
+    - name: Process the artifact
+      run: |
+        echo "Artifact downloaded successfully"
+        # Add your processing steps here
+        
+    # Optional: Upload processed artifact
+    - name: Upload processed artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: processed-artifact
+        path: downloaded-artifacts
+        retention-days: 1
