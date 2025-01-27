@@ -15,17 +15,12 @@ jobs:
       with:
         name: my-files
         path: dummy.txt
-        retention-days: 1
         
   download:
     runs-on: ubuntu-latest
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-      with:
-        path: downloaded-files
-
-    - name: List files
-      run: |
-        echo "Directory structure:"
-        ls -la 
+      - uses: actions/download-artifact@v4
+        with:
+          name: my-files
+      - name: Display structure of downloaded files
+        run: ls -R
