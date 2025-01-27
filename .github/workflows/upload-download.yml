@@ -25,7 +25,6 @@ jobs:
       with:
         name: my-files
         path: downloaded-files
-        run_id: ${{ github.event.workflow_run.id }}
 
     - name: List files
       run: |
