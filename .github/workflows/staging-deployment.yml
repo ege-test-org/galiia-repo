@@ -55,7 +55,7 @@ jobs:
     needs: check-build-status
     runs-on: ubuntu-latest
     env: 
-      WORKFLOW_RUN_ID: ${{ github.event.inputs.workflow_run_id }}
+      WORKFLOW_RUN_ID: ${{ needs.check-build-status.outputs.workflow_run_id }}
       HEALTH_CHECK_URL: "https://artemis-staging-localci.artemis.cit.tum.de/management/health"
 
     steps:
