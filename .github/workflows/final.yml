@@ -72,7 +72,7 @@ jobs:
 
       - name: Display downloaded files
         run: |
-            ls -R downloads
+            ls -R artifacts
             echo "Content of the file:"
             cat artifacts/Artemis-*.war
 
