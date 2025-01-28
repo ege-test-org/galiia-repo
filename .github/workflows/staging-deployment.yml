@@ -26,13 +26,13 @@ jobs:
       - name: Debug workflow run response
         run: |
           echo "Workflow run response: ${{ steps.get_workflow_run.outputs.data }}"
+          echo "Workflow run response: ${{ steps.get_workflow_run.outputs.data.workflow_runs[0].id }}"
 
       - name: Set workflow run ID as output
         id: set_output
         run: |
-          echo "workflow_run_id=$(echo '${{ steps.get_workflow_run.outputs.data }}' | jq -r '.workflow_runs[0].id')" >> $GITHUB_ENV
-          echo "::set-output name=workflow_run_id::$(echo '${{ steps.get_workflow_run.outputs.data }}' | jq -r '.workflow_runs[0].id')"
-          
+          echo "workflow_run_id=$(echo '${{ steps.get_workflow_run.outputs.data.workflow_runs[0].id }}'" >> $GITHUB_ENV
+        
   
       - name: Check for war artifact
         id: verify_artifact
