@@ -19,6 +19,7 @@ jobs:
       with:
         name: Artemis.war
         path: downloads
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         run-id: ${{ github.event.inputs.run_id }}
 
     - name: Display downloaded files
