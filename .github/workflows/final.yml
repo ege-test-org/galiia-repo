@@ -1,5 +1,4 @@
 name: FINAL
-
 on:
   workflow_dispatch:
     inputs:
@@ -70,13 +69,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ env.WORKFLOW_RUN_ID  }}
 
-      - name: Display downloaded files
-        run: |
-            ls -R artifacts
-            echo "Content of the file:"
-            cat artifacts/Artemis-*.war
-
-      
       - name: Verify Primary Node Deployment
         id: verify_deployment
         run: |
@@ -95,3 +87,4 @@ jobs:
               sleep 30
             fi
           done
+
