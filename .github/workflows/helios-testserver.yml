@@ -4,18 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       branch_name:
-        description: "Which branch to deploy"
+        description: 'Branch to deploy'
         required: true
-        type: string
+      commit_sha:
+        description: 'Commit SHA to deploy'
+        required: true
       environment_name:
-        description: "Which environment to deploy (environment defined in GitHub)"
+        description: 'Environment to deploy to'
         required: true
-        type: string
+        type: choice
+        options: 
+          - artemis-staging-localci.artemis.cit.tum.de
       triggered_by:
         description: "Username that triggered deployment (not required, shown if triggered via GitHub UI, logged if triggered via GitHub app)"
-        required: false
-        type: string
-      commit_sha:
         required: false
         type: string
 
