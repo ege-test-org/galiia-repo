@@ -12,9 +12,7 @@ on:
       environment_name:
         description: 'Environment to deploy to'
         required: true
-        type: choice
-        options: 
-          - artemis-staging-localci.artemis.cit.tum.de
+        type: string
       triggered_by:
         description: "Username that triggered deployment (not required, shown if triggered via GitHub UI, logged if triggered via GitHub app)"
         required: false
