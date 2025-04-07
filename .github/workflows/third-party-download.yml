@@ -1,0 +1,17 @@
+name: Third party download
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact from build
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: upload-artemis.yml
+          workflow_conclusion: success
+          name: Artemis.war
+          path: artifacts
+          branch: ${{ github.event.inputs.branch }}

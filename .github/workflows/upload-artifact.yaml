@@ -1,0 +1,19 @@
+name: Create and Upload Artifact
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create dummy file
+      run: |
+        echo "Hello from GitHub Actions" > dummy.txt
+        
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-files
+        path: dummy.txt
+        retention-days: 1
