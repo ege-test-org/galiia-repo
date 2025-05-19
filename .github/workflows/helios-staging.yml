@@ -31,7 +31,9 @@ jobs:
       - name: Log Inputs
         run: |
           echo "Branch: ${{ github.event.inputs.branch_name }}"
+          sleep 5
           echo "Environment: ${{ github.event.inputs.environment_name }}"
+          sleep 5
           echo "Triggered by?: ${{ github.event.inputs.triggered_by }}"
 
 
@@ -44,3 +46,12 @@ jobs:
       - name: Echo
         run: |
           echo "Deploying to ${{ github.event.inputs.environment_name }}"
+          sleep 10
+      - name: Step 2
+        run: |
+          echo "step 2"
+          sleep 10
+      - name: Step 3
+        run: |
+          echo "step 3"
+          sleep 10
