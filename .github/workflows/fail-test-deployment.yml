@@ -1,0 +1,226 @@
+name: Deploy to Testserver with Helios
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch to deploy'
+        required: true
+      commit_sha:
+        description: 'Commit SHA to deploy'
+        required: true
+      environment_name:
+        description: 'Environment to deploy to'
+        required: true
+        type: string
+      triggered_by:
+        description: "Username that triggered deployment (not required, shown if triggered via GitHub UI, logged if triggered via GitHub app)"
+        required: false
+        type: string
+
+concurrency: ${{ github.event.inputs.environment_name }}
+
+env:
+  CI: true
+
+jobs:
+  log-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log Inputs
+        run: |
+          echo "Branch: ${{ github.event.inputs.branch_name }}"
+          echo "Environment: ${{ github.event.inputs.environment_name }}"
+          echo "Triggered by?: ${{ github.event.inputs.triggered_by }}"
+      
+      - name: Initialize Deployment
+        run: echo "Starting deployment process..."
+        
+      - name: Validate Parameters
+        run: |
+          echo "Validating deployment parameters..."
+          sleep 5
+          echo "Parameters validated successfully."
+
+  prepare-infrastructure:
+    needs: [log-inputs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Environment Availability
+        run: |
+          echo "Checking if ${{ github.event.inputs.environment_name }} is available..."
+          sleep 8
+          echo "Environment is available and ready for deployment."
+      
+      - name: Prepare Deployment Resources
+        run: |
+          echo "Preparing resources for deployment..."
+          sleep 12
+          echo "Resources prepared successfully."
+      
+      - name: Configure Network Settings
+        run: |
+          echo "Configuring network settings..."
+          sleep 6
+          echo "Network settings configured."
+
+  build:
+    needs: [log-inputs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        run: echo "Checking out repository at ${{ github.event.inputs.commit_sha }}..."
+      
+      - name: Install Dependencies
+        run: |
+          echo "Installing dependencies..."
+          sleep 15
+          echo "Dependencies installed."
+      
+      - name: Build Application
+        run: |
+          echo "Building application from branch ${{ github.event.inputs.branch_name }}..."
+          sleep 20
+          echo "Application built successfully."
+      
+      - name: Run Tests
+        run: |
+          echo "Running unit tests..."
+          sleep 10
+          echo "Tests passed successfully."
+      
+      - name: Package Artifacts
+        run: |
+          echo "Packaging deployment artifacts..."
+          sleep 8
+          echo "Artifacts packaged successfully."
+
+  security-scan:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan Dependencies
+        run: |
+          echo "Scanning dependencies for vulnerabilities..."
+          sleep 13
+          echo "Dependency scan completed."
+      
+      - name: Static Code Analysis
+        run: |
+          echo "Running static code analysis..."
+          sleep 18
+          echo "Code analysis completed with no critical issues."
+      
+      - name: Container Security Scan
+        run: |
+          echo "Scanning container images..."
+          sleep 15
+          echo "Container scan completed."
+
+  deploy:
+    needs: [prepare-infrastructure, build, security-scan]
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment_name }}
+    steps:
+      - name: Prepare Deployment
+        run: |
+          echo "Preparing deployment to ${{ github.event.inputs.environment_name }}..."
+          sleep 10
+          echo "Deployment preparation complete."
+      
+      - name: Database Migration
+        run: |
+          echo "Running database migrations..."
+          sleep 15
+          echo "Database migrations completed successfully."
+      
+      - name: Deploy Application
+        run: |
+          echo "Deploying application to server..."
+          sleep 30
+          echo "Application deployed successfully."
+      
+      - name: Configure Services
+        run: |
+          echo "Configuring application services..."
+          sleep 15
+          echo "Services configured."
+      
+      - name: Verify Deployment
+        run: |
+          echo "Verifying deployment..."
+          sleep 20
+          echo "Deployment verified and working correctly."
+
+  post-deployment:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Smoke Tests
+        run: |
+          echo "Running smoke tests on deployed application..."
+          sleep 18
+          echo "Smoke tests passed."
+      
+      - name: Send Notifications
+        run: |
+          echo "Sending deployment notifications..."
+          sleep 5
+          echo "Notifications sent."
+      
+      - name: Generate Deployment Report
+        run: |
+          echo "Generating deployment report..."
+          sleep 10
+          echo "Deployment report generated."
+      
+      - name: Cleanup
+        run: |
+          echo "Cleaning up temporary resources..."
+          sleep 8
+          echo "Cleanup completed."
+
+  parallel-monitoring:
+    runs-on: ubuntu-latest
+    needs: [log-inputs]
+    steps:
+      - name: Initialize Monitoring
+        run: |
+          echo "Initializing monitoring systems..."
+          sleep 30
+          echo "Monitoring initialized."
+      
+      - name: Setup Alerting
+        run: |
+          echo "Setting up alerting rules..."
+          sleep 10
+          echo "Alerts configured."
+      
+      - name: Monitor Deployment
+        run: |
+          echo "Monitoring deployment process..."
+          sleep 20
+          echo "Monitoring completed successfully."
+
+  parallel-documentation:
+    runs-on: ubuntu-latest
+    needs: [log-inputs]
+    steps:
+      - name: Update Documentation
+        run: |
+          echo "Updating deployment documentation..."
+          sleep 9
+          echo "Documentation updated."
+      
+      - name: Generate API Docs
+        run: |
+          echo "Generating API documentation..."
+          sleep 30
+          echo "API documentation generated."
+      
+      - name: Publish Documentation
+        run: |
+          echo "Publishing documentation to internal portal..."
+          sleep 10
+          echo "Documentation published."
