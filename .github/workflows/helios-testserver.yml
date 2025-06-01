@@ -126,31 +126,31 @@ jobs:
       - name: Prepare Deployment
         run: |
           echo "Preparing deployment to ${{ github.event.inputs.environment_name }}..."
-          sleep 10
+          sleep 2
           echo "Deployment preparation complete."
       
       - name: Database Migration
         run: |
           echo "Running database migrations..."
-          sleep 25
+          sleep 5
           echo "Database migrations completed successfully."
       
       - name: Deploy Application
         run: |
           echo "Deploying application to server..."
-          sleep 30
+          sleep 6
           echo "Application deployed successfully."
       
       - name: Configure Services
         run: |
           echo "Configuring application services..."
-          sleep 15
+          sleep 3
           echo "Services configured."
       
       - name: Verify Deployment
         run: |
           echo "Verifying deployment..."
-          sleep 20
+          sleep 4
           echo "Deployment verified and working correctly."
 
   post-deployment:
@@ -194,13 +194,13 @@ jobs:
       - name: Setup Alerting
         run: |
           echo "Setting up alerting rules..."
-          sleep 12
+          sleep 2
           echo "Alerts configured."
       
       - name: Monitor Deployment
         run: |
           echo "Monitoring deployment process..."
-          sleep 120
+          sleep 20
           echo "Monitoring completed successfully."
 
   parallel-documentation:
@@ -210,17 +210,17 @@ jobs:
       - name: Update Documentation
         run: |
           echo "Updating deployment documentation..."
-          sleep 45
+          sleep 9
           echo "Documentation updated."
       
       - name: Generate API Docs
         run: |
           echo "Generating API documentation..."
-          sleep 30
+          sleep 6
           echo "API documentation generated."
       
       - name: Publish Documentation
         run: |
           echo "Publishing documentation to internal portal..."
-          sleep 25
+          sleep 5
           echo "Documentation published."
