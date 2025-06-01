@@ -56,7 +56,9 @@ jobs:
         run: |
           echo "Preparing resources for deployment..."
           sleep 12
-          echo "Resources prepared successfully."
+          # Introducing an intentional failure
+          echo "Error: Failed to allocate required resources"
+          exit 1
       
       - name: Configure Network Settings
         run: |
@@ -87,7 +89,10 @@ jobs:
         run: |
           echo "Running unit tests..."
           sleep 10
-          echo "Tests passed successfully."
+          # Introducing a test failure
+          echo "Error: 3 tests failed"
+          echo "Test 'user-authentication.spec.js' failed: Expected status 200 but got 403"
+          exit 1
       
       - name: Package Artifacts
         run: |
@@ -115,7 +120,9 @@ jobs:
         run: |
           echo "Scanning container images..."
           sleep 15
-          echo "Container scan completed."
+          # Introducing a security issue
+          echo "WARN: 2 medium severity vulnerabilities found in dependencies"
+          echo "Container scan completed with warnings."
 
   deploy:
     needs: [prepare-infrastructure, build, security-scan]
@@ -145,7 +152,10 @@ jobs:
         run: |
           echo "Configuring application services..."
           sleep 15
-          echo "Services configured."
+          # Introducing a configuration failure
+          echo "ERROR: Failed to configure load balancer"
+          echo "Service configuration failed"
+          exit 1
       
       - name: Verify Deployment
         run: |
@@ -201,7 +211,9 @@ jobs:
         run: |
           echo "Monitoring deployment process..."
           sleep 20
-          echo "Monitoring completed successfully."
+          # Adding a timeout failure
+          echo "ERROR: Timeout waiting for metrics to initialize"
+          exit 1
 
   parallel-documentation:
     runs-on: ubuntu-latest
